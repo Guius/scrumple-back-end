@@ -17,7 +17,7 @@ import { TasksModule } from './tasks/tasks.module';
           database: 'scrumple',
           autoLoadEntities: true,
           // DO NOT TURN ON SYNCHRONIZE
-          synchronize: true,
+          synchronize: false,
           bigNumberStrings: false,
         };
       },

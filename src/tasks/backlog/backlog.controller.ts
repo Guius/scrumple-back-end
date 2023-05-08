@@ -45,7 +45,7 @@ export class BacklogController {
   async editBacklogItem(
     @Param('id') id: string,
     @Body() editBacklogItemRequestDto: EditBacklogItemRequestDto,
-  ) {
+  ): Promise<BacklogItemResponseDto> {
     return await this.service.editBacklogItem(id, editBacklogItemRequestDto);
   }
 
