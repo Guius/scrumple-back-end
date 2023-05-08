@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -30,6 +31,7 @@ export class Sprint {
   @Column()
   sprint_number: number;
 
+  @Index()
   @Column({ nullable: true, type: 'bigint' })
   complete: number;
 }

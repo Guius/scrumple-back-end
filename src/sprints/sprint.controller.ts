@@ -1,5 +1,8 @@
-import { Controller, Post } from '@nestjs/common';
-import { CreateSprintResponseDto } from './sprint.controller.dtos';
+import { Controller, Get, Post } from '@nestjs/common';
+import {
+  CreateSprintResponseDto,
+  GetCurrentSprintResponseDto,
+} from './sprint.controller.dtos';
 import { SprintService } from './sprint.service';
 import { Sprint } from './entities/sprint.entity';
 
@@ -19,6 +22,23 @@ export class SprintsController {
     return {
       id: sprintCreated.id,
       sprintNumber: sprintCreated.sprint_number,
+    };
+  }
+
+  /**
+   * Retrieves the current sprint, i.e., the sprint that is not complete
+   *
+   * @returns {Promise<GetCurrentSprintResponseDto>} Promise that resolves to the current sprint.
+   */
+  @Get('current')
+  async getCurrentSprint(): Promise<GetCurrentSprintResponseDto> {
+    const currentSprint: Sprint = await this.service.getCurrentSprint();
+
+    return {
+      id: currentSprint.id,
+      startDate: currentSprint.start_date,
+      endDate: currentSprint.end_date,
+      sprintNumber: currentSprint.sprint_number,
     };
   }
 }

@@ -47,4 +47,20 @@ export class SprintService {
     // save the sprint
     return await this.sprintRepository.save(sprintToSave);
   }
+
+  /**
+   * Retrieves the current sprint, i.e., the sprint that is not complete
+   *
+   * @returns {Promise<Sprint>} Promise that resolves to the current sprint.
+   */
+  async getCurrentSprint(): Promise<Sprint> {
+    return await this.sprintRepository.findOne({
+      order: {
+        sprint_number: 'DESC', // Order by sprint number in descending order to get the highest number first. This is in the odd case that there would be 2 current sprints, we want to returns the latest one
+      },
+      where: {
+        complete: IsNull(), // Only retrieve sprints that are not complete.
+      },
+    });
+  }
 }
