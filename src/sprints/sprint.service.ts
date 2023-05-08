@@ -9,6 +9,11 @@ export class SprintService {
     @InjectRepository(Sprint) private sprintRepository: Repository<Sprint>,
   ) {}
 
+  /**
+   * Creates a new sprint if there are no incomplete sprints.
+   * @returns {Promise<Sprint>} A promise that resolves with the newly created Sprint entity.
+   * @throws {BadRequestException} If there is an incomplete sprint.
+   */
   async createSprint(): Promise<Sprint> {
     // 1. Check if there is a sprint that is not complete
     let notCompleteSprint: Sprint[];

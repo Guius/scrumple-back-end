@@ -7,6 +7,11 @@ import { Sprint } from './entities/sprint.entity';
 export class SprintsController {
   constructor(private service: SprintService) {}
 
+  /**
+   * Creates a new sprint if there are no incomplete sprints.
+   * @returns {Promise<CreateSprintResponseDto>} A promise that resolves with a stripped down version of the newly created sprint
+   * @throws {BadRequestException} If there is an incomplete sprint.
+   */
   @Post()
   async createSprint(): Promise<CreateSprintResponseDto> {
     const sprintCreated: Sprint = await this.service.createSprint();
