@@ -19,6 +19,7 @@ export class ActivityRecord {
   @UpdateDateColumn({ nullable: true })
   update_date: string;
 
+  @Index()
   @Column({ type: 'bigint' })
   activity_date: number;
 
@@ -28,7 +29,6 @@ export class ActivityRecord {
   @Column()
   duration_hours: number;
 
-  @Index()
   @Column()
   reflection: Reflection;
 }
