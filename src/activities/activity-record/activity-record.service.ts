@@ -18,6 +18,7 @@ export class ActivityRecordService {
       duration_hours: methodParams.durationHours,
       reflection: methodParams.reflection,
       activity: methodParams.activity,
+      activity_date: methodParams.activityDate,
     });
 
     return await this.repository.save(activityRecordToSave);

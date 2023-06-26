@@ -15,13 +15,16 @@ export class ActivityRecordController {
       activity: body.activity,
       durationHours: body.durationHours,
       reflection: body.reflection,
+      activityDate: body.activityDate,
     });
 
     return {
-      duration_hours: entity.duration_hours,
+      durationHours: entity.duration_hours,
       id: entity.id,
       reflection: entity.reflection,
       activity: entity.activity,
+      // big ints come out of the database as strings
+      activityDate: entity.activity_date * 1,
     };
   }
 }

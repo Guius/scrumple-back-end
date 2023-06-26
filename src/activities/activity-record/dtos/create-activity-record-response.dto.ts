@@ -2,7 +2,8 @@ import { Reflection } from '../../enums/reflect.enum';
 
 export class CreateActivityRecordResponseDto {
   id: string;
-  duration_hours: number;
+  durationHours: number;
   reflection: Reflection;
   activity: string;
+  activityDate: number;
 }

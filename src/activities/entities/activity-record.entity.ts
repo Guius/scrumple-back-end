@@ -19,6 +19,9 @@ export class ActivityRecord {
   @UpdateDateColumn({ nullable: true })
   update_date: string;
 
+  @Column({ type: 'bigint' })
+  activity_date: number;
+
   @Column()
   activity: string;
 

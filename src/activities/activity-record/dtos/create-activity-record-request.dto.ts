@@ -13,4 +13,8 @@ export class CreateActivityRecordQueryDto {
   @IsDefined()
   @IsString()
   activity: string;
+
+  @IsDefined()
+  @IsInt()
+  activityDate: number;
 }

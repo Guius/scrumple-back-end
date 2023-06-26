@@ -13,4 +13,8 @@ export class CreateActivityRecordMethodParams {
   @IsDefined()
   @IsString()
   activity: string;
+
+  @IsDefined()
+  @IsInt()
+  activityDate: number;
 }
