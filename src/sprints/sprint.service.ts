@@ -16,15 +16,12 @@ export class SprintService {
    */
   async createSprint(): Promise<Sprint> {
     // 1. Check if there is a sprint that is not complete
-    let notCompleteSprint: Sprint[];
-    let sprintCount: number;
-    [notCompleteSprint, sprintCount] = await this.sprintRepository.findAndCount(
-      {
+    const [notCompleteSprint, sprintCount] =
+      await this.sprintRepository.findAndCount({
         where: {
           complete: IsNull(),
         },
-      },
-    );
+      });
 
     if (notCompleteSprint.length > 0) {
       Logger.warn(
