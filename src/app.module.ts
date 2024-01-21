@@ -18,7 +18,7 @@ import { SprintModule } from './sprints/sprints.module';
           database: 'scrumple',
           autoLoadEntities: true,
           // DO NOT TURN ON SYNCHRONIZE
-          synchronize: false,
+          synchronize: true,
           bigNumberStrings: false,
         };
       },

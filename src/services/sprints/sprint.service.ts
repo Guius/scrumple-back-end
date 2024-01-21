@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sprint } from '../../entities/sprint.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 
 @Injectable()
 export class SprintService {
@@ -27,6 +27,14 @@ export class SprintService {
 
     // save the sprint
     return await this.sprintRepository.save(newSprint);
+  }
+
+  async getNonCompleteSprints(): Promise<Sprint[]> {
+    return await this.sprintRepository.find({
+      where: {
+        end_date: IsNull(), // Only retrieve sprints that are not complete.
+      },
+    });
   }
 
   /**

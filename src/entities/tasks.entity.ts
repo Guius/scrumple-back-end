@@ -2,9 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Sprint } from './sprint.entity';
 
 @Entity()
 export class Task {
@@ -34,4 +37,8 @@ export class Task {
 
   @Column({ nullable: true })
   assigned_to_sprint: number;
+
+  @ManyToOne(() => Sprint, { nullable: true })
+  @JoinColumn({ name: 'sprint_id' })
+  sprint: Sprint;
 }
