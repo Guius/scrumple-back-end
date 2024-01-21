@@ -9,6 +9,6 @@ export default new DataSource({
     ? process.env.DATABASE_PASSWORD
     : 'password',
   database: process.env.DATABASE_NAME ? process.env.DATABASE_NAME : 'scrumple',
-  entities: ['src/*/entities/*.entity.ts'],
+  entities: ['src/entities/*.entity.ts'],
   migrations: ['migrations/*.ts'],
 });

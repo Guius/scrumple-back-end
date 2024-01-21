@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Sprint } from './entities/sprint.entity';
+import { Sprint } from '../entities/sprint.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

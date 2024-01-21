@@ -4,7 +4,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { SprintModule } from './sprints/sprints.module';
-import { ActivityRecordModule } from './activities/activity-record/activity-record.module';
 
 @Module({
   imports: [
@@ -27,7 +26,6 @@ import { ActivityRecordModule } from './activities/activity-record/activity-reco
     }),
     TasksModule,
     SprintModule,
-    ActivityRecordModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,7 +6,7 @@ import {
   BacklogItemResponseDto,
 } from '../dtos/create-task.dto';
 import { EditBacklogItemRequestDto } from '../dtos/edit-task.dto';
-import { Task } from '../entities/tasks.entity';
+import { Task } from '../../entities/tasks.entity';
 
 @Injectable()
 export class BacklogService {
