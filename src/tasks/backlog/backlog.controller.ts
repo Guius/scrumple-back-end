@@ -13,7 +13,7 @@ import {
   BacklogItemResponseDto,
 } from '../dtos/create-task.dto';
 import { EditBacklogItemRequestDto } from '../dtos/edit-task.dto';
-import { BacklogService } from './backlog.service';
+import { BacklogService } from '../../services/backlog/backlog.service';
 
 @Controller('backlog')
 export class BacklogController {

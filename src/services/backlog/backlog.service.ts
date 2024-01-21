@@ -4,8 +4,8 @@ import { FindManyOptions, IsNull, Like, Repository } from 'typeorm';
 import {
   CreateBacklogItemRequestDto,
   BacklogItemResponseDto,
-} from '../dtos/create-task.dto';
-import { EditBacklogItemRequestDto } from '../dtos/edit-task.dto';
+} from '../../tasks/dtos/create-task.dto';
+import { EditBacklogItemRequestDto } from '../../tasks/dtos/edit-task.dto';
 import { Task } from '../../entities/tasks.entity';
 
 @Injectable()
