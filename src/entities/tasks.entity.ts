@@ -35,7 +35,7 @@ export class Task {
   @Column({ nullable: true })
   label: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'bigint' })
   assigned_to_sprint: number;
 
   @ManyToOne(() => Sprint, { nullable: true })
