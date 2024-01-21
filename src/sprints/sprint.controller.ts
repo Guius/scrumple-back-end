@@ -30,15 +30,14 @@ export class SprintsController {
    *
    * @returns {Promise<GetCurrentSprintResponseDto>} Promise that resolves to the current sprint.
    */
-  @Get('current')
-  async getCurrentSprint(): Promise<GetCurrentSprintResponseDto> {
-    const currentSprint: Sprint = await this.service.getCurrentSprint();
-
-    return {
-      id: currentSprint.id,
-      startDate: currentSprint.start_date,
-      endDate: currentSprint.end_date,
-      sprintNumber: currentSprint.sprint_number,
-    };
-  }
+  // @Get('current')
+  // async getCurrentSprint(): Promise<GetCurrentSprintResponseDto> {
+  // const currentSprint: Sprint = await this.service.getCurrentSprint();
+  // return {
+  //   id: currentSprint.id,
+  //   startDate: currentSprint.start_date,
+  //   endDate: currentSprint.end_date,
+  //   sprintNumber: currentSprint.sprint_number,
+  // };
+  // }
 }

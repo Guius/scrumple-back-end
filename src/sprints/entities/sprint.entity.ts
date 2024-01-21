@@ -22,16 +22,15 @@ export class Sprint {
   @Column({ nullable: true, type: 'bigint' })
   start_date: number;
 
+  @Column({ nullable: true, type: 'int' })
+  sprint_duration_weeks: number;
+
   @Column({ nullable: true, type: 'bigint' })
   end_date: number;
 
   @Column({ nullable: true })
-  sprint_completion_status: SprintStatus;
+  sprint_completion_status: SprintStatus; // don't know if we want this yet
 
   @Column()
   sprint_number: number;
-
-  @Index()
-  @Column({ nullable: true, type: 'bigint' })
-  complete: number;
 }
