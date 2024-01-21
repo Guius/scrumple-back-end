@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sprint } from './entities/sprint.entity';
-import { IsNull, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SprintService {
@@ -10,11 +10,31 @@ export class SprintService {
   ) {}
 
   /**
+   * We do not care if a sprint already exists - let them create as many as they want
+   * Better not to restrict them + they can delete them if they want
+   * @returns the created sprint (will only have the sprint number filled out - everything else is generated either at the end of the sprint or at the beginning)
+   */
+  async createSprint(): Promise<Sprint> {
+    // Get the sprint count
+    const sprintCount = await this.sprintRepository.count();
+
+    // generate the sprint number
+    const sprintNumber = sprintCount + 1;
+
+    // generate the new sprint
+    const newSprint = new Sprint();
+    newSprint.sprint_number = sprintNumber;
+
+    // save the sprint
+    return await this.sprintRepository.save(newSprint);
+  }
+
+  /**
    * Creates a new sprint if there are no incomplete sprints.
    * @returns {Promise<Sprint>} A promise that resolves with the newly created Sprint entity.
    * @throws {BadRequestException} If there is an incomplete sprint.
    */
-  async createSprint(): Promise<Sprint> {
+  async createSprintOld(): Promise<Sprint> {
     // 1. Check if there is a sprint that is not complete
     const [notCompleteSprint, sprintCount] =
       await this.sprintRepository.findAndCount({

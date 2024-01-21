@@ -1,8 +1,5 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import {
-  CreateSprintResponseDto,
-  GetCurrentSprintResponseDto,
-} from './sprint.controller.dtos';
+import { Controller, Post } from '@nestjs/common';
+import { CreateSprintResponseDto } from './sprint.controller.dtos';
 import { SprintService } from './sprint.service';
 import { Sprint } from './entities/sprint.entity';
 
