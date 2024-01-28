@@ -1,12 +1,13 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sprint } from '../../entities/sprint.entity';
-import { IsNull, Repository } from 'typeorm';
+import { DataSource, IsNull, Repository } from 'typeorm';
 
 @Injectable()
 export class SprintService {
   constructor(
     @InjectRepository(Sprint) private sprintRepository: Repository<Sprint>,
+    private dataSource: DataSource,
   ) {}
 
   /**
@@ -15,18 +16,19 @@ export class SprintService {
    * @returns the created sprint (will only have the sprint number filled out - everything else is generated either at the end of the sprint or at the beginning)
    */
   async createSprint(): Promise<Sprint> {
-    // Get the sprint count
-    const sprintCount = await this.sprintRepository.count();
+    let result: Sprint;
+    await this.dataSource.manager.transaction(
+      'REPEATABLE READ',
+      async (transactionalEntityManager) => {
+        const sprintCount = await transactionalEntityManager.count(Sprint);
+        const sprintNumber = sprintCount + 1;
+        const newSprint = new Sprint();
+        newSprint.sprint_number = sprintNumber;
+        result = await transactionalEntityManager.save(newSprint);
+      },
+    );
 
-    // generate the sprint number
-    const sprintNumber = sprintCount + 1;
-
-    // generate the new sprint
-    const newSprint = new Sprint();
-    newSprint.sprint_number = sprintNumber;
-
-    // save the sprint
-    return await this.sprintRepository.save(newSprint);
+    return result;
   }
 
   async getNonCompleteSprints(): Promise<Sprint[]> {
