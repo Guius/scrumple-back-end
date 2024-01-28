@@ -53,4 +53,12 @@ export class BacklogController {
   async deleteBacklogItem(@Param('id') id: string) {
     return await this.service.deleteBacklogItem(id);
   }
+
+  @Patch('assign/:taskId/:sprintId')
+  async assignToSprint(
+    @Param('taskId') taskId: string,
+    @Param('sprintId') sprintId: string,
+  ): Promise<void> {
+    await this.service.assignTaskToSprint(taskId, sprintId);
+  }
 }

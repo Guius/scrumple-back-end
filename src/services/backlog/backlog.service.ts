@@ -1,17 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindManyOptions, IsNull, Like, Repository } from 'typeorm';
+import { DataSource, FindManyOptions, IsNull, Like, Repository } from 'typeorm';
 import {
   CreateBacklogItemRequestDto,
   BacklogItemResponseDto,
 } from '../../tasks/dtos/create-task.dto';
 import { EditBacklogItemRequestDto } from '../../tasks/dtos/edit-task.dto';
 import { Task } from '../../entities/tasks.entity';
+import { Sprint } from 'src/entities/sprint.entity';
 
 @Injectable()
 export class BacklogService {
   constructor(
     @InjectRepository(Task) private taskRepository: Repository<Task>,
+    private dataSource: DataSource,
   ) {}
 
   async createBacklogItem(
@@ -148,5 +150,46 @@ export class BacklogService {
     }
 
     await this.taskRepository.delete(id);
+  }
+
+  async assignTaskToSprint(taskId: string, sprintId: string): Promise<void> {
+    await this.dataSource.manager.transaction(
+      'REPEATABLE READ',
+      async (transactionalEntityManager) => {
+        const task = await transactionalEntityManager.findOneBy(Task, {
+          id: taskId,
+          assigned_to_sprint: IsNull(),
+          completed: IsNull(),
+        });
+
+        if (!task) {
+          console.error(
+            `assignTaskToSprint - Could not find backlog item with id: ${taskId}`,
+          );
+          throw new NotFoundException(
+            `assignTaskToSprint - Could not find backlog item with id: ${taskId}`,
+          );
+        }
+
+        const sprint = await transactionalEntityManager.findOneBy(Sprint, {
+          id: sprintId,
+          end_date: IsNull(),
+        });
+
+        if (!sprint) {
+          console.error(
+            `assignTaskToSprint - Could not find sprint with id: ${sprintId}`,
+          );
+          throw new NotFoundException(
+            `assignTaskToSprint - Could not find sprint with id: ${sprintId}`,
+          );
+        }
+
+        task.sprint = sprint;
+        task.assigned_to_sprint = new Date().getTime();
+
+        await transactionalEntityManager.save(task);
+      },
+    );
   }
 }
