@@ -1,6 +1,7 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import {
   CreateSprintResponseDto,
+  GetNotCompleteSprintNumbersResponseDto,
   GetNotCompleteSprintResponseDto,
 } from './sprint.controller.dtos';
 import { SprintService } from '../services/sprints/sprint.service';
@@ -64,19 +65,20 @@ export class SprintsController {
     return response;
   }
 
-  /**
-   * Retrieves the current sprint, i.e., the sprint that is not complete
-   *
-   * @returns {Promise<GetCurrentSprintResponseDto>} Promise that resolves to the current sprint.
-   */
-  // @Get('current')
-  // async getCurrentSprint(): Promise<GetCurrentSprintResponseDto> {
-  // const currentSprint: Sprint = await this.service.getCurrentSprint();
-  // return {
-  //   id: currentSprint.id,
-  //   startDate: currentSprint.start_date,
-  //   endDate: currentSprint.end_date,
-  //   sprintNumber: currentSprint.sprint_number,
-  // };
-  // }
+  @Get('not-complete-sprint-numbers')
+  async getNonCompleteSprintNumbers(): Promise<
+    GetNotCompleteSprintNumbersResponseDto[]
+  > {
+    const sprints = await this.service.getNonCompleteSprints();
+
+    const result: GetNotCompleteSprintNumbersResponseDto[] = [];
+    for (const sprint of sprints) {
+      result.push({
+        srintNumber: sprint.sprint_number,
+        sprintId: sprint.id,
+      });
+    }
+
+    return result;
+  }
 }

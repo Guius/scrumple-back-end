@@ -19,3 +19,8 @@ export class GetNotCompleteSprintResponseDto {
   sprintDurationWeeks?: number;
   tasks: BacklogItemResponseDto[];
 }
+
+export class GetNotCompleteSprintNumbersResponseDto {
+  sprintId: string;
+  srintNumber: number;
+}
